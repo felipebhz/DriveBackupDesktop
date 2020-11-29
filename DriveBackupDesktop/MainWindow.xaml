@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="Upload Files" HorizontalAlignment="Left" Margin="369,152,0,0" VerticalAlignment="Top" Height="107" Width="213" Click="Button_Click"/>
+        <Button Content="Choose Folder" HorizontalAlignment="Left" Margin="369,320,0,0" VerticalAlignment="Top" Height="59" Width="147" Click="Choose_Folder_Click"/>
 
     </Grid>
 </Window>
