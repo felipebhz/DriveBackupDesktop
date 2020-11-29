@@ -11,7 +11,6 @@ using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 
-
 namespace DriveBackupDesktop
 {
     class DriveApi
@@ -25,6 +24,7 @@ namespace DriveBackupDesktop
         public void StartBackup()
         {
             UserCredential credential;
+            FileManager FileManager = new FileManager();
 
             using (var stream =
                 new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
@@ -55,10 +55,9 @@ namespace DriveBackupDesktop
 
             // List files.
             //IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute().Files;
-            
-            string dateToday = (string)DateTime.UtcNow.ToString("u");
-            Dictionary<string, string> newFolder = CreateFolder("NewFolder_" + dateToday, googleDriveService);
-            UploadBasic("D:\\temp\\001-small-dummy.zip", newFolder["id"], googleDriveService);
+
+            Dictionary<string, string> newFolder = CreateFolder("NewFolder_" + Common.getDateToday("dd-MM-yyyy-HH:mm:ss"), googleDriveService);
+            UploadBasic(@"D:\temp\001-small-dummy.zip", newFolder["id"], FileManager.GetFilePaths(), googleDriveService);
 
         }
 
@@ -79,23 +78,25 @@ namespace DriveBackupDesktop
             return createdFolder;
         }
 
-        private static void UploadBasic(string path, string remoteFolderId, DriveService googleDriveService)
+        private static void UploadBasic(string path, string remoteFolderId, HashSet<string> localFilesToUpload, DriveService googleDriveService)
         {
-            var fileMetadata = new Google.Apis.Drive.v3.Data.File();
-            fileMetadata.Parents = new[] { remoteFolderId };
-            fileMetadata.Name = Path.GetFileName(path);
-            fileMetadata.MimeType = "application/zip";
-            //System.Diagnostics.Debug.WriteLine(fileMetadata);
-            FilesResource.CreateMediaUpload request;
-            using (var stream = new System.IO.FileStream(path, System.IO.FileMode.Open))
+            foreach (string fileToUpload in localFilesToUpload)
             {
-                request = googleDriveService.Files.Create(fileMetadata, stream, "application/zip");
-                request.Fields = "id";
-                request.Upload();
+                var fileMetadata = new Google.Apis.Drive.v3.Data.File();
+                fileMetadata.Parents = new[] { remoteFolderId };
+                fileMetadata.Name = Path.GetFileName(fileToUpload);
+                fileMetadata.MimeType = "application/zip";
+                //System.Diagnostics.Debug.WriteLine(fileMetadata);
+                FilesResource.CreateMediaUpload request;
+                using (var stream = new System.IO.FileStream(fileToUpload, System.IO.FileMode.Open))
+                {
+                    request = googleDriveService.Files.Create(fileMetadata, stream, "application/zip");
+                    request.Fields = "id";
+                    request.Upload();
+                }
+
+                var file = request.ResponseBody;
             }
-
-            var file = request.ResponseBody;
-
         }
 
     }

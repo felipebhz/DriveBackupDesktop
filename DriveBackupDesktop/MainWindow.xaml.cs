@@ -12,13 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using Microsoft.WindowsAPICodePack.Dialogs;
 //using System.Windows.Forms;
 //using Microsoft.Win32;
 
 // Expose class to use here
-using DriveBackupDesktop;
-
+//using DriveBackupDesktop;
 
 namespace DriveBackupDesktop
 {
@@ -27,67 +25,32 @@ namespace DriveBackupDesktop
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+            DateTodayLabel.Content = Common.getDateToday("dd/MM/yyyy");
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Start_Backup_Button_Click(object sender, RoutedEventArgs e)
         {
             var backup = new DriveApi();
             backup.StartBackup();
         }
 
-
-        private void Choose_Folder_Click(object sender, RoutedEventArgs e)
+        private void Choose_Folder_Button_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
-            if (dialog.ShowDialog(this).GetValueOrDefault())
-            {
-                String path = dialog.SelectedPath;
-                UserSelectedPath(path);
-                //System.Diagnostics.Debug.WriteLine(path);
-            }
+            FileManager FileManager = new FileManager();
+            FileManager.ShowDirSelectDialog();
+            SelectedFolderLabel.Content = FileManager.GetUserSelectedPath();
+        }
+
+        private void Debug_Button_Click(object sender, RoutedEventArgs e)
+        {
 
         }
 
-        public String UserSelectedPath(string path)
-        {
-            String UserSelectedPath = path;
-            System.Diagnostics.Debug.WriteLine(path);
-            return UserSelectedPath;
-        }
-
-
-
-
-
-
-
-
-        /*
-        private void Choose_Folder_Click(object sender, RoutedEventArgs e)
-        {
-            var folderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            folderDialog.ShowDialog();
-
-        }
-*/
-        /*private void Choose_Folder_Click(object sender, RoutedEventArgs e)
-        {
-            var fileDialog = new OpenFileDialog();
-            if (fileDialog.ShowDialog() == true)
-            {
-                String filePath = fileDialog.FileName;
-                System.Diagnostics.Debug.WriteLine(filePath);
-
-            }
-
-        }*/
-
-
-
-
+        
 
 
     }

@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DriveBackupDesktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="450">
     <Grid>
-        <Button Content="Upload Files" HorizontalAlignment="Left" Margin="369,152,0,0" VerticalAlignment="Top" Height="107" Width="213" Click="Button_Click"/>
-        <Button Content="Choose Folder" HorizontalAlignment="Left" Margin="369,320,0,0" VerticalAlignment="Top" Height="59" Width="147" Click="Choose_Folder_Click"/>
+        <Rectangle HorizontalAlignment="Left" Height="88" Margin="10,8,0,0" Stroke="Black" VerticalAlignment="Top" Width="104"/>
+        <Button Content="Upload Files" HorizontalAlignment="Left" Margin="132,256,0,0" VerticalAlignment="Top" Height="32" Width="202" Click="Start_Backup_Button_Click" FontWeight="Bold" Background="#FFC53C3C" Foreground="White"/>
+        <Button Content="Choose Folder" HorizontalAlignment="Left" Margin="132,166,0,0" VerticalAlignment="Top" Height="27" Width="202" Click="Choose_Folder_Button_Click"/>
+        <Label x:Name="SelectedFolderLabel" Content="Waiting for folder..." HorizontalAlignment="Left" Margin="225,193,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="DateTodayLabel" Content="Debug Area" HorizontalAlignment="Left" Margin="25,18,0,0" VerticalAlignment="Top"/>
+        <Button Content="Debug Button" HorizontalAlignment="Left" Margin="23,61,0,0" VerticalAlignment="Top" Click="Debug_Button_Click"/>
+        <Label Content="Selected Folder: " HorizontalAlignment="Left" Margin="131,193,0,0" VerticalAlignment="Top" FontWeight="SemiBold"/>
 
     </Grid>
 </Window>
