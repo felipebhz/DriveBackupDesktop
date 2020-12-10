@@ -24,10 +24,17 @@ namespace DriveBackupDesktop
 
             if (dialog.FileName != null)
             {
-                FileManager.ProcessDirectory(UserSelectedFolder);
+                setUserSelectedFolderSetting(UserSelectedFolder);
+                ProcessDirectory(UserSelectedFolder);
             }
 
             return UserSelectedFolder;
+        }
+
+        public void setUserSelectedFolderSetting(string UserSelectedFolder)
+        {
+            Properties.Settings.Default["ChosenFolderAutoBackup"] = UserSelectedFolder;
+            Properties.Settings.Default.Save();
         }
 
         public static void ProcessDirectory(string targetDirectory)
@@ -55,15 +62,6 @@ namespace DriveBackupDesktop
             System.IO.File.WriteAllLines(@"D:\WriteLines"+Common.getDateToday("MM-dd-yyyy")+".txt", filePaths);
             return filePaths;
             
-        }
-
-        public String GetUserSelectedPath()
-        {
-            if (UserSelectedFolder == null)
-            {
-                return "No folder selected";
-            }
-            return UserSelectedFolder;
         }
 
         //DirectoryInfo dir = new DirectoryInfo(string );

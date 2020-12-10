@@ -25,11 +25,12 @@ namespace DriveBackupDesktop
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        FileManager FileManager = new FileManager();
         public MainWindow()
         {
             InitializeComponent();
             DateTodayLabel.Content = Common.getDateToday("dd/MM/yyyy");
+            SelectedFolderLabel.Content = Properties.Settings.Default.ChosenFolderAutoBackup;
         }
 
         private void Start_Backup_Button_Click(object sender, RoutedEventArgs e)
@@ -40,17 +41,17 @@ namespace DriveBackupDesktop
 
         private void Choose_Folder_Button_Click(object sender, RoutedEventArgs e)
         {
-            FileManager FileManager = new FileManager();
+            //FileManager.GetUserSelectedPath();
             FileManager.ShowDirSelectDialog();
-            SelectedFolderLabel.Content = FileManager.GetUserSelectedPath();
+            SelectedFolderLabel.Content = Properties.Settings.Default.ChosenFolderAutoBackup;
         }
 
         private void Debug_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            //System.Diagnostics.Debug.WriteLine(Properties.Settings.Default.ChosenFolderAutoBackup);
         }
 
-        
+
 
 
     }

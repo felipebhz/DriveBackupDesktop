@@ -22,5 +22,17 @@ namespace DriveBackupDesktop.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Test Value ON Settings")]
+        public string ChosenFolderAutoBackup {
+            get {
+                return ((string)(this["ChosenFolderAutoBackup"]));
+            }
+            set {
+                this["ChosenFolderAutoBackup"] = value;
+            }
+        }
     }
 }
